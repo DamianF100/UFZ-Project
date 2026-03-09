@@ -1,6 +1,6 @@
 # This is the README
 ## First ideas
-Now, I proceed consequently in German:
+Now, I proceed in German - consequently as I am :
 
 Albatross-Projekt 
 
@@ -9,16 +9,23 @@ Albatross-Projekt
 - In jedem Gridpoint ein Brutpaar
 - Hat eine gewisse Brutindex/Brutlust X
 - Ein Gridpoint ob es Brutpaar brütet oder nicht
+- Ein Albatross brütet alle 2 Jahre
+  -- Brutzylus: 24 nicht brüten, dann 3 Monate brüten 
+- Wir machen einen Threshold , wenn der Überschritten wird, fängt es an zu brüten
 - Ein hoher Brutindex erhöht die Wahrscheinlichkeit das im zweiten Gitter der Gridpoint auf Brüten gesetzt wird
 
 (1) Initialisierung:
-    o	Eine zufällige Wahrscheinlichkeitsverteilung im Brutindex Gitter 
+    o	Eine zufällige Brutverteiling im Brutindex Gitter von 1-27
+    
+(2) Mit jedem Zeitschritt (1 Monat)
+-  Erhöht sich die Wahrscheinlichkeit des Brutindex um 1
+-  Wenn der Threshold 24 überschritten wird - dann brüten Sie -> Gitter zwei wird auf 1 gesetzte
+-  alle die auf 28 gesetzt werden, werden auf null gesetzte -> wenn sie auf null gesetzt werden, dann auch Brutgitter auf null 
 
-(2) Mit jedem Zeitschritt: 
--  Erhöht sich die Wahrscheinlichkeit des Brutindex
--  Nach dem ein Paar anfängt zu brüten wird der Index runter gesetzt
+
 -  Nachbarschaftbeziehung
 -      o	Entfernungsindex
+
 
 
 
