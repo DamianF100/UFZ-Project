@@ -5,7 +5,7 @@
 #include <QTimer>
 
 using namespace std;
-mt19937 rangen(42);
+mt19937 rangen(43289739);
 uniform_int_distribution<int> randist_1_27(1,27);
 
 // Definitions
@@ -14,9 +14,11 @@ const int HEIGHT       = 100;
 const int WIDTH        = 100;
 const int SIZE_COLONIE = 40;
 
+int option = 1;
+
 double BREED_TRESH = 24;
-int    NEIG_TRESH  = 2;
-int    NEIG_DIST   = 10;
+int    NEIG_TRESH  = 30;
+int    NEIG_DIST   = 20;
 int    NEIG_EFF    = 15;
 
 int    BREEDING[HEIGHT][WIDTH];
@@ -108,25 +110,29 @@ void MainWindow::on_STEP_clicked()
 
                     }
                 }
+                if(option == 1){
 
-                if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  12 && BREEDING[y][x] != 2){
-                    BREEDING_INDEX[y][x] = 24;
+                    if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  12 && BREEDING[y][x] != 2){
+                        BREEDING_INDEX[y][x] = 24;
 
+                    }
+                    else{
+                        BREEDING_INDEX[y][x]++;
+                    }
                 }
                 else{
-                    BREEDING_INDEX[y][x]++;
+                         if (BREEDING_INDEX[y][x] < 24 - NEIG_EFF){
+                        BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
+                      }
+                     else if(BREEDING_INDEX[y][x] >24 - NEIG_EFF && BREEDING_INDEX[y][x] < 24){
+                             BREEDING_INDEX[y][x] = 24;
+                      }
+                     else{
+                         BREEDING_INDEX[y][x] ++;
+                    }
+                      BREEDING_INDEX[y][x] ++;
                 }
-                //     if (BREEDING_INDEX[y][x] < 24 - NEIG_EFF){
-                //     BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
-                //  }
-                // else if(BREEDING_INDEX[y][x] >24 - NEIG_EFF && BREEDING_INDEX[y][x] < 24){
-                //         BREEDING_INDEX[y][x] = 24;
-                //  }
-                // else{
-                //     BREEDING_INDEX[y][x] ++;
-                // }
-                // }
-                // BREEDING_INDEX[y][x] ++;
+
 
 
                 if(BREEDING_INDEX[y][x] > 27){
