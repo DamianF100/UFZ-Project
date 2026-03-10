@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
 #include <random>
 #include <QTimer>
 
@@ -10,15 +9,15 @@ uniform_int_distribution<int> randist_1_27(1,27);
 
 // Definitions
 
-const int HEIGHT       = 100;
-const int WIDTH        = 100;
-const int SIZE_COLONIE = 40;
+const int HEIGHT       = 500;
+const int WIDTH        = 500;
+const int SIZE_COLONIE = 200;
 
 int option = 1;
 
 double BREED_TRESH = 24;
-int    NEIG_TRESH  = 30;
-int    NEIG_DIST   = 20;
+int    NEIG_TRESH  = 28;
+int    NEIG_DIST   = 8;
 int    NEIG_EFF    = 15;
 
 int    BREEDING[HEIGHT][WIDTH];
@@ -39,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
     running = false;
 
     connect(&timer, &QTimer::timeout, this, &MainWindow::on_STEP_clicked);
-    timer.start(200);
+    timer.start(50);
 }
 
 MainWindow::~MainWindow()
@@ -99,8 +98,8 @@ void MainWindow::on_STEP_clicked()
                 int y_start    = y - NEIG_DIST;
                 int x_start    = x - NEIG_DIST;
 
-                for(int y_n = y_start; y_n < y_start + NEIG_DIST; y_n++){
-                    for(int x_n = x_start; x_n < x_start + NEIG_DIST; x_n++){
+                for(int y_n = y_start; y_n < y_start + NEIG_DIST * 2; y_n++){
+                    for(int x_n = x_start; x_n < x_start + NEIG_DIST * 2; x_n++){
 
                         if(BREEDING[y_n][x_n] == 2){
 
