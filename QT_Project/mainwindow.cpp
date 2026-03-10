@@ -83,8 +83,8 @@ void MainWindow::on_INIT_clicked()
     ui->Plot->replot();
 }
 
-
 void MainWindow::on_STEP_clicked()
+
 {
     if(sender() == &timer && !running) return;
 
@@ -109,18 +109,24 @@ void MainWindow::on_STEP_clicked()
                     }
                 }
 
-                if(COUNT_NEIG > NEIG_TRESH){
-                    if (BREEDING_INDEX[y][x] < 24 - NEIG_EFF){
-                    BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
-                 }
-                else if(BREEDING_INDEX[y][x] >24 - NEIG_EFF && BREEDING_INDEX[y][x] < 24){
-                        BREEDING_INDEX[y][x] = 24;
-                 }
+                if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  12 && BREEDING[y][x] != 2){
+                    BREEDING_INDEX[y][x] = 24;
+
+                }
                 else{
-                    BREEDING_INDEX[y][x] ++;
+                    BREEDING_INDEX[y][x]++;
                 }
-                }
-                BREEDING_INDEX[y][x] ++;
+                //     if (BREEDING_INDEX[y][x] < 24 - NEIG_EFF){
+                //     BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
+                //  }
+                // else if(BREEDING_INDEX[y][x] >24 - NEIG_EFF && BREEDING_INDEX[y][x] < 24){
+                //         BREEDING_INDEX[y][x] = 24;
+                //  }
+                // else{
+                //     BREEDING_INDEX[y][x] ++;
+                // }
+                // }
+                // BREEDING_INDEX[y][x] ++;
 
 
                 if(BREEDING_INDEX[y][x] > 27){
