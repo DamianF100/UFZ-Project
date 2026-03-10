@@ -77,7 +77,7 @@ void MainWindow::on_INIT_clicked()
     ui->Plot->replot();
 }
 
-
+// One time step - right now, it is one month
 void MainWindow::on_pushButton_clicked()
 {
     for(int y = 0; y < HEIGHT; y++){
@@ -90,7 +90,7 @@ void MainWindow::on_pushButton_clicked()
                 int x_start    = x - NEIG_DIST;
 
                 for(int y_n = y_start; y_n < y_start + NEIG_DIST; y_n++){
-                    for(int x_n = x_start = 0; x_n < x_start + NEIG_DIST; x_n++){
+                    for(int x_n = x_start; x_n < x_start + NEIG_DIST; x_n++){
 
                         if(BREEDING[y_n][x_n] == 2){
 
@@ -101,18 +101,24 @@ void MainWindow::on_pushButton_clicked()
                     }
                 }
 
-                if(COUNT_NEIG > NEIG_TRESH){
-                    if (BREEDING_INDEX[y][x] < 24 - NEIG_EFF){
-                    BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
-                 }
-                else if(BREEDING_INDEX[y][x] >24 - NEIG_EFF && BREEDING_INDEX[y][x] < 24){
-                        BREEDING_INDEX[y][x] = 24;
-                 }
+                if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  12 && BREEDING[y][x] != 2){
+                    BREEDING_INDEX[y][x] = 24;
+
+                }
                 else{
-                    BREEDING_INDEX[y][x] ++;
+                    BREEDING_INDEX[y][x]++;
                 }
-                }
-                BREEDING_INDEX[y][x] ++;
+                //     if (BREEDING_INDEX[y][x] < 24 - NEIG_EFF){
+                //     BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
+                //  }
+                // else if(BREEDING_INDEX[y][x] >24 - NEIG_EFF && BREEDING_INDEX[y][x] < 24){
+                //         BREEDING_INDEX[y][x] = 24;
+                //  }
+                // else{
+                //     BREEDING_INDEX[y][x] ++;
+                // }
+                // }
+                // BREEDING_INDEX[y][x] ++;
 
 
                 if(BREEDING_INDEX[y][x] > 27){
