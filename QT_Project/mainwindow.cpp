@@ -13,9 +13,9 @@ uniform_int_distribution<int> randist_1_27(1,27);
 int speed_timer = 50;
 
 // Definitions of the size
-const int HEIGHT       = 50;  //Height of the the entire simulated area
-const int WIDTH        = 50; //Width of the entire simulated ares
-const int SIZE_COLONIE = 3;  //Radius of the simulted colonie - It is a square with this line size
+const int HEIGHT       = 500; //Height of the the entire simulated area
+const int WIDTH        = 500; //Width of the entire simulated ares
+const int SIZE_COLONIE = 200;  //Radius of the simulted colonie - It is a square with this line size
 
 // Paremeter for the neighbour relation
 int rest_time = 18; //Which time after breeding the individuum cannot breed
@@ -127,7 +127,7 @@ void MainWindow::on_STEP_clicked(){
 
                 if(option == 1){
 
-                    if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  rest_time  && BREEDING[y][x] != 2){ //If the neighbours threshold is met, it is not in rest time and not breeding
+                    if(NEIGHBOURS[x][y] > NEIG_TRESH && BREEDING_INDEX[y][x] >  rest_time  && BREEDING[y][x] != 2){ //If the neighbours threshold is met, it is not in rest time and not breeding
                         BREEDING_INDEX[y][x] = BREED_TRESH; //set directly to breeding
                         
                     }
