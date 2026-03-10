@@ -111,18 +111,18 @@ void MainWindow::on_STEP_clicked(){
                 }
                 if(option == 1){
                     if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  rest_time  && BREEDING[y][x] != 2){ //If the neighbours threshold is met, it is not in rest time and not breeding
-                        BREEDING_INDEX[y][x] = 24; //set directly to breeding
+                        BREEDING_INDEX[y][x] = BREED_TRESH; //set directly to breeding
                     }
                     else{
                         BREEDING_INDEX[y][x]++;
                     }
                 }
                 else{ //TODO be updated - check the logic
-                         if (BREEDING_INDEX[y][x] < 24 - NEIG_EFF){
+                         if (BREEDING_INDEX[y][x] < BREED_TRESH - NEIG_EFF){
                         BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
                       }
-                     else if(BREEDING_INDEX[y][x] >24 - NEIG_EFF && BREEDING_INDEX[y][x] < 24){
-                             BREEDING_INDEX[y][x] = 24;
+                     else if(BREEDING_INDEX[y][x] >BREED_TRESH - NEIG_EFF && BREEDING_INDEX[y][x] < BREED_TRESH){
+                             BREEDING_INDEX[y][x] = BREED_TRESH ;
                       }
                      else{
                          BREEDING_INDEX[y][x] ++;
