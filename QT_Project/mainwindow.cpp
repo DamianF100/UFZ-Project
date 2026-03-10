@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
 #include <random>
 #include <QTimer>
 
@@ -10,15 +9,19 @@ uniform_int_distribution<int> randist_1_27(1,27);
 
 // Definitions
 
-const int HEIGHT       = 100;
-const int WIDTH        = 100;
-const int SIZE_COLONIE = 50;
+
+const int HEIGHT       = 500;
+const int WIDTH        = 500;
+const int SIZE_COLONIE = 200;
+
 
 int option = 1;
 
 double BREED_TRESH = 24;
-int    NEIG_TRESH  = 70;
-int    NEIG_DIST   = 10;
+
+int    NEIG_TRESH  = 28;
+int    NEIG_DIST   = 8;
+
 int    NEIG_EFF    = 15;
 
 int    BREEDING[HEIGHT][WIDTH];
