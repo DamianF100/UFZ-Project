@@ -1,4 +1,9 @@
 # This is the README
+## Infos über Albtross
+Ca. alle zwei Jahre brüten
+ca. 3 Monate Brutzeit
+Kolonie ca. 5000 Brutpaare
+
 ## First ideas
 Now, I proceed in German - consequently as I am :
 
@@ -25,6 +30,7 @@ Albatross-Projekt
 
 -  Nachbarschaftbeziehung
 -      o	Entfernungsindex
+
 
 
 
