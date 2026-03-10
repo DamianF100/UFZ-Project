@@ -12,13 +12,13 @@ uniform_int_distribution<int> randist_1_27(1,27);
 
 const int HEIGHT       = 100;
 const int WIDTH        = 100;
-const int SIZE_COLONIE = 40;
+const int SIZE_COLONIE = 50;
 
 int option = 1;
 
 double BREED_TRESH = 24;
-int    NEIG_TRESH  = 30;
-int    NEIG_DIST   = 20;
+int    NEIG_TRESH  = 70;
+int    NEIG_DIST   = 10;
 int    NEIG_EFF    = 15;
 
 int    BREEDING[HEIGHT][WIDTH];
@@ -39,7 +39,7 @@ MainWindow::MainWindow(QWidget *parent)
     running = false;
 
     connect(&timer, &QTimer::timeout, this, &MainWindow::on_STEP_clicked);
-    timer.start(200);
+    timer.start(50);
 }
 
 MainWindow::~MainWindow()
@@ -99,8 +99,8 @@ void MainWindow::on_STEP_clicked()
                 int y_start    = y - NEIG_DIST;
                 int x_start    = x - NEIG_DIST;
 
-                for(int y_n = y_start; y_n < y_start + NEIG_DIST; y_n++){
-                    for(int x_n = x_start; x_n < x_start + NEIG_DIST; x_n++){
+                for(int y_n = y_start; y_n < y_start + NEIG_DIST * 2; y_n++){
+                    for(int x_n = x_start; x_n < x_start + NEIG_DIST * 2; x_n++){
 
                         if(BREEDING[y_n][x_n] == 2){
 
@@ -112,7 +112,7 @@ void MainWindow::on_STEP_clicked()
                 }
                 if(option == 1){
 
-                    if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  12 && BREEDING[y][x] != 2){
+                    if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  18  && BREEDING[y][x] != 2){
                         BREEDING_INDEX[y][x] = 24;
 
                     }
