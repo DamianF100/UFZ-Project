@@ -21,9 +21,14 @@ private slots:
 
     void on_INIT_clicked();
 
-    void on_pushButton_clicked();
+    void on_STEP_clicked();
+
+    void on_RUN_clicked();
 
 private:
     Ui::MainWindow *ui;
+
+    QTimer timer;
+    bool running;
 };
 #endif // MAINWINDOW_H

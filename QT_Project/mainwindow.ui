@@ -37,7 +37,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="STEP">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -47,7 +47,20 @@
      </rect>
     </property>
     <property name="text">
-     <string>TIME</string>
+     <string>STEP</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="RUN">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>170</y>
+      <width>93</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>START/STOP</string>
     </property>
    </widget>
   </widget>

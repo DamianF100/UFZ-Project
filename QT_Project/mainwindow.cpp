@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <iostream>
 #include <random>
+#include <QTimer>
 
 using namespace std;
 mt19937 rangen(42);
@@ -11,7 +12,7 @@ uniform_int_distribution<int> randist_1_27(1,27);
 
 const int HEIGHT       = 100;
 const int WIDTH        = 100;
-const int SIZE_COLONIE = 30;
+const int SIZE_COLONIE = 40;
 
 double BREED_TRESH = 24;
 int    NEIG_TRESH  = 2;
@@ -32,6 +33,11 @@ MainWindow::MainWindow(QWidget *parent)
     ui->Plot->LegendAdd(0, "White");
     ui->Plot->LegendAdd(1, "Red");
     ui->Plot->LegendAdd(2, "Green");
+
+    running = false;
+
+    connect(&timer, &QTimer::timeout, this, &MainWindow::on_STEP_clicked);
+    timer.start(200);
 }
 
 MainWindow::~MainWindow()
@@ -78,8 +84,10 @@ void MainWindow::on_INIT_clicked()
 }
 
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_STEP_clicked()
 {
+    if(sender() == &timer && !running) return;
+
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
 
@@ -90,7 +98,7 @@ void MainWindow::on_pushButton_clicked()
                 int x_start    = x - NEIG_DIST;
 
                 for(int y_n = y_start; y_n < y_start + NEIG_DIST; y_n++){
-                    for(int x_n = x_start = 0; x_n < x_start + NEIG_DIST; x_n++){
+                    for(int x_n = x_start; x_n < x_start + NEIG_DIST; x_n++){
 
                         if(BREEDING[y_n][x_n] == 2){
 
@@ -136,5 +144,11 @@ void MainWindow::on_pushButton_clicked()
     }
 
     ui->Plot->replot();
+}
+
+
+void MainWindow::on_RUN_clicked()
+{
+    running = !running;
 }
 
