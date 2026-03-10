@@ -17,11 +17,12 @@ int option = 1;
 
 double BREED_TRESH = 24;
 int    NEIG_TRESH  = 28;
-int    NEIG_DIST   = 8;
+int    NEIG_DIST   = 10;
 int    NEIG_EFF    = 15;
 
 int    BREEDING[HEIGHT][WIDTH];
-double BREEDING_INDEX[HEIGHT][WIDTH];
+int    BREEDING_INDEX[HEIGHT][WIDTH];
+int    NEIGHBOURS[HEIGHT][WIDTH];
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -51,7 +52,8 @@ void MainWindow::on_INIT_clicked()
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
 
-            BREEDING[y][x] = 0;
+            BREEDING[y][x]   = 0;
+            NEIGHBOURS[y][x] = 0;
 
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
                 BREEDING_INDEX[y][x] = randist_1_27(rangen);
@@ -85,9 +87,10 @@ void MainWindow::on_INIT_clicked()
 }
 
 void MainWindow::on_STEP_clicked()
-
 {
     if(sender() == &timer && !running) return;
+
+    // Count neighbours
 
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
@@ -106,12 +109,24 @@ void MainWindow::on_STEP_clicked()
                             COUNT_NEIG ++;
 
                         }
-
                     }
                 }
+
+                NEIGHBOURS[x][y] = COUNT_NEIG;
+            }
+        }
+    }
+
+    // Update breeding status and index
+
+    for(int y = 0; y < HEIGHT; y++){
+        for(int x = 0; x < WIDTH; x++){
+
+            if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
+
                 if(option == 1){
 
-                    if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  12 && BREEDING[y][x] != 2){
+                    if(NEIGHBOURS[x][y] > NEIG_TRESH && BREEDING_INDEX[y][x] >  12 && BREEDING[y][x] != 2){
                         BREEDING_INDEX[y][x] = 24;
 
                     }
