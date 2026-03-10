@@ -1,4 +1,6 @@
 # This is the README
+Fragestellung: Kann die Propagierung eines Signals zu der Synchronisation einer Population führen. 
+
 ## Infos über Albtross
 Ca. alle zwei Jahre brüten
 ca. 3 Monate Brutzeit
@@ -29,7 +31,23 @@ Albatross-Projekt
 
 
 -  Nachbarschaftbeziehung
--      o	Entfernungsindex
+
+
+ToDo: 
+Johannes: Indexgitter 
+
+Damian: Code aufräumen, zweite Nachbarschaftlogik 
+- Schieber
+- Parameter während der Laufzeit ändern
+- Code aufräumen und kommentieren 
+- zweites Indexgitter für richtige aktualsierung
+
+- Weitere 
+- zweite Option einbauen für Nachbarschaftsbeziehung
+- Ideen sammeln für Wahrscheinlichkeitsbasiertes brüten
+- Populations
+- 
+
 
 
 
