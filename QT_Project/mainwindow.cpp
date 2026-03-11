@@ -20,7 +20,6 @@ const int SIZE_COLONIE = 75;  //Radius of the simulted colonie - It is a square 
 
 
 // Paremeter for the neighbour relation
-int rest_time = 12; //Which time after breeding the individuum cannot breed
 double BREED_TRESH = 24; //Threshold after which a individuum starts breeding
 
 
@@ -47,7 +46,6 @@ MainWindow::MainWindow(QWidget *parent)
     running = false;
     connect(&timer, &QTimer::timeout, this, & MainWindow::on_STEP_clicked);
     timer.start(speed_timer);
-
 
 }
 
@@ -80,7 +78,20 @@ void MainWindow::on_PRINT_SPEED_cursorPositionChanged(int arg1, int arg2)
 
 void MainWindow::on_PRINT_REST_cursorPositionChanged(int arg1, int arg2)
 {
-    REST = ui->REST->text().toInt();
+    REST = ui->PRINT_REST->text().toInt();
+}
+
+void MainWindow::on_CURSOR_SPEED_sliderMoved(int position)
+{
+    SPEED = position;
+    ui->PRINT_SPEED->setText(QString::number(position));
+}
+
+
+void MainWindow::on_CURSOR_REST_sliderMoved(int position)
+{
+    REST = position;
+    ui->PRINT_REST->setText(QString::number(position));
 }
 
 
@@ -107,24 +118,10 @@ void MainWindow::on_RUN_clicked()
     running = !running;
 }
 
-
-
-
-void MainWindow::on_CURSOR_SPEED_sliderMoved(int position)
-{
-
-}
-
-
-void MainWindow::on_CURSOR_REST_sliderMoved(int position)
-{
-
-}
-
-
 //Initialise the arrays
 void MainWindow::on_INIT_clicked()
 {
+
     //Set the Breeding_index to a normal random distribution
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
@@ -157,6 +154,7 @@ void MainWindow::on_INIT_clicked()
         }
     }
     ui->COLLONY->replot();
+
 }
 
 //One time step
@@ -191,7 +189,7 @@ void MainWindow::on_STEP_clicked(){
         for(int x = 0; x < WIDTH; x++){
 
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
-                if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > rest_time && BREEDING_INDEX[y][x] < BREED_TRESH ){
+                if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > REST && BREEDING_INDEX[y][x] < BREED_TRESH ){
                         BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
                     if( BREEDING_INDEX[y][x] > BREED_TRESH  ) {
                             BREEDING_INDEX[y][x] = BREED_TRESH;

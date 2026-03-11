@@ -31,12 +31,21 @@ private slots:
 
     void on_CURSOR_EFF_sliderMoved(int position);
 
+    void on_CURSOR_SPEED_sliderMoved(int position);
+
+    void on_CURSOR_REST_sliderMoved(int position);
+
 
     void on_PRINT_TRESH_cursorPositionChanged(int arg1, int arg2);
 
     void on_PRINT_DIST_cursorPositionChanged(int arg1, int arg2);
 
     void on_PRINT_EFF_cursorPositionChanged(int arg1, int arg2);
+
+    void on_PRINT_SPEED_cursorPositionChanged(int arg1, int arg2);
+
+    void on_PRINT_REST_cursorPositionChanged(int arg1, int arg2);
+
 
 private:
     Ui::MainWindow *ui;
@@ -47,6 +56,8 @@ private:
     int NEIG_TRESH = 1;
     int NEIG_DIST  = 1;
     int NEIG_EFF   = 1;
+    int SPEED      = 200;
+    int REST       = 1;
 
 };
 #endif // MAINWINDOW_H
