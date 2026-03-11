@@ -15,12 +15,13 @@ int speed_timer = 50;
 // Definitions of the size
 const int HEIGHT       = 50;  //Height of the the entire simulated area
 const int WIDTH        = 50; //Width of the entire simulated ares
-const int SIZE_COLONIE = 3;  //Radius of the simulted colonie - It is a square with this line size
+const int SIZE_COLONIE = 3;  //Radius of the simulted colonie - It is a square with this line size but the ones omitted which are not in the circle
 
 // Paremeter for the neighbour relation
 int rest_time = 18; //Which time after breeding the individuum cannot breed
-int option = 1; //switch between the different neigbour relation - either they start direct breeding or the index increases faster
 double BREED_TRESH = 24; //Threshold after which a individuum starts breeding
+
+int option = 1; //switch between the different neigbour relation - either they start direct breeding or the index increases faster
 int    NEIG_TRESH  = 28; //After how many breeding neighbours an individuum starts breeding
 int    NEIG_DIST   = 8; //the number of indivuum which are considered for the counter - the # is (NEIG_DIST*2)^2
 int    NEIG_EFF    = 15; //How much the index is increased if the threshold is activated
@@ -98,7 +99,6 @@ void MainWindow::on_STEP_clicked(){
     if(sender() == &timer && !running) return;
 
     // Count neighbours
-
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
@@ -112,7 +112,6 @@ void MainWindow::on_STEP_clicked(){
                         }
                     }
                 }
-
                 NEIGHBOURS[x][y] = COUNT_NEIG;
             }
         }
@@ -124,28 +123,15 @@ void MainWindow::on_STEP_clicked(){
         for(int x = 0; x < WIDTH; x++){
 
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
+                if (BREEDING_INDEX[y][x] > BREED_TRESH && BREEDING_INDEX[y][x] > rest_time && BREEDING_INDEX[y][x] < BREED_TRESH ){
+                        BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
+                    if( BREEDING_INDEX[y][x] > BREED_TRESH  ) {
+                            BREEDING_INDEX[y][x] = BREED_TRESH;
 
-                if(option == 1){
-
-                    if(COUNT_NEIG > NEIG_TRESH && BREEDING_INDEX[y][x] >  rest_time  && BREEDING[y][x] != 2){ //If the neighbours threshold is met, it is not in rest time and not breeding
-                        BREEDING_INDEX[y][x] = BREED_TRESH; //set directly to breeding
-                        
-                    }
-                    else{
-                        BREEDING_INDEX[y][x]++;
                     }
                 }
-                else{ //TODO be updated - check the logic
-                         if (BREEDING_INDEX[y][x] < BREED_TRESH - NEIG_EFF){
-                        BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
-                      }
-                     else if(BREEDING_INDEX[y][x] >BREED_TRESH - NEIG_EFF && BREEDING_INDEX[y][x] < BREED_TRESH){
-                             BREEDING_INDEX[y][x] = BREED_TRESH ;
-                      }
-                     else{
-                         BREEDING_INDEX[y][x] ++;
-                    }
-                      BREEDING_INDEX[y][x] ++;
+                else{
+                    BREEDING_INDEX[y][x] ++;
                 }
 
                 // Updates the breeding grid
