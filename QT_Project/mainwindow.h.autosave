@@ -37,20 +37,18 @@ private slots:
     void on_PRINT_DIST_cursorPositionChanged(int arg1, int arg2);
 
     void on_PRINT_EFF_cursorPositionChanged(int arg1, int arg2);
-
+    
+    void on_PRINT_SPEED_cursorPositionChanged(int arg1, int arg2);
+    
 private:
     Ui::MainWindow *ui;
 
     QTimer timer;
     bool running;
 
-    int NEIG_TRESH = 1;
-    int NEIG_DIST  = 1;
-    int NEIG_EFF   = 1;
-
-    QVector<double> time_data;
-    QVector<double> breeding_data;
-    int timestep = 0;
+    int NEIG_TRESH = 24;
+    int NEIG_DIST  = 8;
+    int NEIG_EFF   = 15;
 
 };
 #endif // MAINWINDOW_H
