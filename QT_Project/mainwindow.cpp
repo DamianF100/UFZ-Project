@@ -10,16 +10,19 @@ mt19937 rangen(43289739);
 uniform_int_distribution<int> randist_1_27(1,27);
 
 //Options for the visualisation
-int speed_timer = 50;
+int speed_timer = 30;
 
 // Definitions of the size
+
 const int HEIGHT       = 200; //Height of the the entire simulated area
 const int WIDTH        = 200; //Width of the entire simulated ares
 const int SIZE_COLONIE = 75;  //Radius of the simulted colonie - It is a square with this line size
 
+
 // Paremeter for the neighbour relation
-int rest_time = 18; //Which time after breeding the individuum cannot breed
+int rest_time = 12; //Which time after breeding the individuum cannot breed
 double BREED_TRESH = 24; //Threshold after which a individuum starts breeding
+
 
 // interesting parameter combinations: (24,40,10,10)
 // interesting parameter combinations: (24,30,8,5)
@@ -162,7 +165,6 @@ void MainWindow::on_STEP_clicked(){
     if(sender() == &timer && !running) return;
 
     // Count neighbours
-
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
@@ -178,6 +180,7 @@ void MainWindow::on_STEP_clicked(){
                 }
 
                 NEIGHBOURS[y][x] = COUNT_NEIG;
+
             }
         }
     }
@@ -188,17 +191,16 @@ void MainWindow::on_STEP_clicked(){
         for(int x = 0; x < WIDTH; x++){
 
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
-
-                    if (BREEDING_INDEX[y][x] < BREED_TRESH - NEIG_EFF){
+                if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > rest_time && BREEDING_INDEX[y][x] < BREED_TRESH ){
                         BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
-                      }
-                     else if(BREEDING_INDEX[y][x] >BREED_TRESH - NEIG_EFF && BREEDING_INDEX[y][x] < BREED_TRESH){
-                             BREEDING_INDEX[y][x] = BREED_TRESH ;
-                      }
-                     else{
-                         BREEDING_INDEX[y][x] ++;
+                    if( BREEDING_INDEX[y][x] > BREED_TRESH  ) {
+                            BREEDING_INDEX[y][x] = BREED_TRESH;
+
                     }
-                      BREEDING_INDEX[y][x] ++;
+                }
+                else{
+                    BREEDING_INDEX[y][x] ++;
+                }
 
                 // Updates the breeding grid
                 if(BREEDING_INDEX[y][x] > 27){
