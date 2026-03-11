@@ -55,22 +55,69 @@ MainWindow::~MainWindow()
 
 // Options
 
-void MainWindow::on_NEIG_TRESH_sliderMoved(int position)
+void MainWindow::on_PRINT_TRESH_cursorPositionChanged(int arg1, int arg2)
+{
+    BREED_TRESH = ui->PRINT_TRESH->text().toDouble();
+}
+
+void MainWindow::on_PRINT_DIST_cursorPositionChanged(int arg1, int arg2)
+{
+    NEIG_DIST = ui->PRINT_DIST->text().toInt();
+}
+
+void MainWindow::on_PRINT_EFF_cursorPositionChanged(int arg1, int arg2)
+{
+    NEIG_EFF = ui->PRINT_EFF->text().toInt();
+}
+
+void MainWindow::on_PRINT_SPEED_cursorPositionChanged(int arg1, int arg2)
+{
+    SPEED = ui->PRINT_SPEED->text().toInt();
+}
+
+void MainWindow::on_PRINT_REST_cursorPositionChanged(int arg1, int arg2)
+{
+    REST = ui->REST->text().toInt();
+}
+
+
+void MainWindow::on_CURSOR_TRESH_sliderMoved(int position)
 {
     NEIG_TRESH = position;
+    ui->PRINT_TRESH->setText(QString::number(position));
 }
 
-
-void MainWindow::on_NEI_DIST_sliderMoved(int position)
+void MainWindow::on_CURSOR_DIST_sliderMoved(int position)
 {
     NEIG_DIST = position;
+    ui->PRINT_DIST->setText(QString::number(position));
 }
 
-
-void MainWindow::on_NEIG_EFF_sliderMoved(int position)
+void MainWindow::on_CURSOR_EFF_sliderMoved(int position)
 {
     NEIG_EFF = position;
+    ui->PRINT_EFF->setText(QString::number(position));
 }
+
+void MainWindow::on_RUN_clicked()
+{
+    running = !running;
+}
+
+
+
+
+void MainWindow::on_CURSOR_SPEED_sliderMoved(int position)
+{
+
+}
+
+
+void MainWindow::on_CURSOR_REST_sliderMoved(int position)
+{
+
+}
+
 
 //Initialise the arrays
 void MainWindow::on_INIT_clicked()
@@ -173,9 +220,4 @@ void MainWindow::on_STEP_clicked(){
         }
     }
     ui->COLLONY->replot();
-}
-
-void MainWindow::on_RUN_clicked()
-{
-    running = !running;
 }

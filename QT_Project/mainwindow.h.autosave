@@ -37,7 +37,9 @@ private slots:
     void on_PRINT_DIST_cursorPositionChanged(int arg1, int arg2);
 
     void on_PRINT_EFF_cursorPositionChanged(int arg1, int arg2);
-
+    
+    void on_PRINT_SPEED_cursorPositionChanged(int arg1, int arg2);
+    
 private:
     Ui::MainWindow *ui;
 
