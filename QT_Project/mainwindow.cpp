@@ -255,7 +255,6 @@ void MainWindow::on_STEP_clicked(){
     }
     ui->COLLONY->replot();
 }
-<<<<<<< HEAD
 
 
 
@@ -264,5 +263,3 @@ void MainWindow::on_RUN_clicked()
 {
     running = !running;
 }
-=======
->>>>>>> dc071d5e9e5fee8996784e0f99c81307b66e0801
