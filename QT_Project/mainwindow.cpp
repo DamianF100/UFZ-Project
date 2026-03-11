@@ -120,11 +120,6 @@ void MainWindow::on_CURSOR_EFF_sliderMoved(int position)
     ui->PRINT_EFF->setText(QString::number(position));
 }
 
-void MainWindow::on_RUN_clicked()
-{
-    running = !running;
-}
-
 //Initialise the arrays
 void MainWindow::on_INIT_clicked()
 {   time_data.clear();
