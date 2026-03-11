@@ -63,6 +63,29 @@
      <string>START/STOP</string>
     </property>
    </widget>
+<<<<<<< HEAD
+=======
+   <widget class="QWidget" name="SUMMARY" native="true">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>410</y>
+      <width>531</width>
+      <height>201</height>
+     </rect>
+    </property>
+    <widget class="QCustomPlot" name="Timeseries" native="true">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>-30</y>
+       <width>301</width>
+       <height>261</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+>>>>>>> eb59476e3ecc447e98f39eacc03834802388f7f0
    <widget class="QSlider" name="CURSOR_TRESH">
     <property name="geometry">
      <rect>
@@ -283,7 +306,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>26</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>
@@ -294,6 +317,12 @@
    <class>QMMColorGrid</class>
    <extends>QWidget</extends>
    <header>qmmcolorgrid.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

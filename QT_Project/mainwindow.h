@@ -59,5 +59,9 @@ private:
     int SPEED      = 200;
     int REST       = 1;
 
+    QVector<double> time_data;
+    QVector<double> breeding_data;
+    int timestep = 0;
+
 };
 #endif // MAINWINDOW_H
