@@ -25,10 +25,22 @@ private slots:
 
     void on_RUN_clicked();
 
+    void on_NEIG_TRESH_sliderMoved(int position);
+
+    void on_NEI_DIST_sliderMoved(int position);
+
+    void on_NEIG_EFF_sliderMoved(int position);
+
+
 private:
     Ui::MainWindow *ui;
 
     QTimer timer;
     bool running;
+
+    int NEIG_TRESH = 24;
+    int NEIG_DIST  = 8;
+    int NEIG_EFF   = 15;
+
 };
 #endif // MAINWINDOW_H
