@@ -66,12 +66,22 @@
    <widget class="QWidget" name="SUMMARY" native="true">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>430</y>
+      <x>90</x>
+      <y>410</y>
       <width>531</width>
       <height>201</height>
      </rect>
     </property>
+    <widget class="QCustomPlot" name="Timeseries" native="true">
+     <property name="geometry">
+      <rect>
+       <x>180</x>
+       <y>-30</y>
+       <width>301</width>
+       <height>261</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QSlider" name="NEIG_TRESH">
     <property name="geometry">
@@ -167,7 +177,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>26</height>
+     <height>17</height>
     </rect>
    </property>
   </widget>
@@ -178,6 +188,12 @@
    <class>QMMColorGrid</class>
    <extends>QWidget</extends>
    <header>qmmcolorgrid.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

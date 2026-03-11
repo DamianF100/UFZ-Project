@@ -14,9 +14,9 @@ int speed_timer = 30;
 
 // Definitions of the size
 
-const int HEIGHT       = 200; //Height of the the entire simulated area
-const int WIDTH        = 200; //Width of the entire simulated ares
-const int SIZE_COLONIE = 75;  //Radius of the simulted colonie - It is a square with this line size
+const int HEIGHT       = 100; //Height of the the entire simulated area
+const int WIDTH        = 100; //Width of the entire simulated ares
+const int SIZE_COLONIE = 30;  //Radius of the simulted colonie - It is a square with this line size
 
 
 // Paremeter for the neighbour relation
@@ -48,6 +48,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&timer, &QTimer::timeout, this, & MainWindow::on_STEP_clicked);
     timer.start(speed_timer);
 
+    ui->Timeseries->addGraph();
+    ui->Timeseries->xAxis->setLabel("Time step");
+    ui->Timeseries->yAxis->setLabel("Breeding individuals");
+
+    ui->Timeseries->xAxis->setRange(0,100);
+    ui->Timeseries->yAxis->setRange(0, SIZE_COLONIE*SIZE_COLONIE * 3.14 );
+
 
 }
 
@@ -77,7 +84,12 @@ void MainWindow::on_NEIG_EFF_sliderMoved(int position)
 
 //Initialise the arrays
 void MainWindow::on_INIT_clicked()
-{
+{   time_data.clear();
+    breeding_data.clear();
+    timestep = 0;
+
+    ui->Timeseries->graph(0)->setData(time_data, breeding_data);
+    ui->Timeseries->replot();
     //Set the Breeding_index to a normal random distribution
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
@@ -167,6 +179,26 @@ void MainWindow::on_STEP_clicked(){
         }
     }
 
+    int sum_breeding = 0;
+
+    for(int y = 0; y < HEIGHT; y++){
+        for(int x = 0; x < WIDTH; x++){
+            if(BREEDING[y][x] == 2){
+                sum_breeding++;
+            }
+        }
+    }
+
+
+    time_data.push_back(timestep);
+    breeding_data.push_back(sum_breeding);
+    timestep++;
+
+    ui->Timeseries->graph(0)->setData(time_data, breeding_data);
+    ui->Timeseries->xAxis->setRange(0, timestep);
+    ui->Timeseries->replot();
+
+
     // Shows the plot
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
@@ -176,6 +208,9 @@ void MainWindow::on_STEP_clicked(){
     }
     ui->COLLONY->replot();
 }
+
+
+
 
 void MainWindow::on_RUN_clicked()
 {

@@ -42,5 +42,9 @@ private:
     int NEIG_DIST  = 1;
     int NEIG_EFF   = 1;
 
+    QVector<double> time_data;
+    QVector<double> breeding_data;
+    int timestep = 0;
+
 };
 #endif // MAINWINDOW_H
