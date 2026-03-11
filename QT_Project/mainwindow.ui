@@ -215,7 +215,7 @@
      <number>1</number>
     </property>
     <property name="maximum">
-     <number>500</number>
+     <number>1000</number>
     </property>
     <property name="orientation">
      <enum>Qt::Orientation::Vertical</enum>
@@ -231,7 +231,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>200</string>
+     <string>1</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
