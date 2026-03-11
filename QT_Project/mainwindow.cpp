@@ -10,7 +10,7 @@ mt19937 rangen(43289739);
 uniform_int_distribution<int> randist_1_27(1,27);
 
 //Options for the visualisation
-int speed_timer = 50;
+int speed_timer = 30;
 
 // Definitions of the size
 
@@ -20,7 +20,7 @@ const int SIZE_COLONIE = 75;  //Radius of the simulted colonie - It is a square 
 
 
 // Paremeter for the neighbour relation
-int rest_time = 18; //Which time after breeding the individuum cannot breed
+int rest_time = 12; //Which time after breeding the individuum cannot breed
 double BREED_TRESH = 24; //Threshold after which a individuum starts breeding
 
 
@@ -144,7 +144,7 @@ void MainWindow::on_STEP_clicked(){
         for(int x = 0; x < WIDTH; x++){
 
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
-                if (BREEDING_INDEX[y][x] > BREED_TRESH && BREEDING_INDEX[y][x] > rest_time && BREEDING_INDEX[y][x] < BREED_TRESH ){
+                if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > rest_time && BREEDING_INDEX[y][x] < BREED_TRESH ){
                         BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
                     if( BREEDING_INDEX[y][x] > BREED_TRESH  ) {
                             BREEDING_INDEX[y][x] = BREED_TRESH;

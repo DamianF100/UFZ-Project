@@ -38,9 +38,9 @@ private:
     QTimer timer;
     bool running;
 
-    int NEIG_TRESH = 24;
-    int NEIG_DIST  = 8;
-    int NEIG_EFF   = 15;
+    int NEIG_TRESH = 1;
+    int NEIG_DIST  = 1;
+    int NEIG_EFF   = 1;
 
 };
 #endif // MAINWINDOW_H
