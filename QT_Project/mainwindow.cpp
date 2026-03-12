@@ -16,7 +16,7 @@ int window = 100;
 
 //Effect options
 bool OPTION_NEIG = FALSE;
-bool OPTION_SEAS = TRUE;
+bool OPTION_SEAS = FALSE;
 
 
 // Definitions of the size
@@ -127,6 +127,19 @@ void MainWindow::on_CURSOR_EFF_sliderMoved(int position)
 {
     NEIG_EFF = position;
     ui->PRINT_EFF->setText(QString::number(position));
+}
+
+
+void MainWindow::on_OPTION_SEAS_clicked()
+{
+    OPTION_SEAS = !OPTION_SEAS;
+    ui->OPTION_SEAS->setText(OPTION_SEAS ? "ON" : "OFF");
+}
+
+void MainWindow::on_OPTION_NEIG_clicked()
+{
+    OPTION_NEIG = !OPTION_NEIG;
+    ui->OPTION_NEIG->setText(OPTION_NEIG ? "ON" : "OFF");
 }
 
 //Initialise the arrays
