@@ -65,7 +65,7 @@ private:
     QVector<double> breeding_data;
     int timestep = 0;
 
-    int MONTH = 0;
+    int MONTH = 1;
     QString MONTHS[12] = {
         "January",
         "February",
