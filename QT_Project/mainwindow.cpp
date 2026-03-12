@@ -54,12 +54,12 @@ MainWindow::MainWindow(QWidget *parent)
     timer.start(SPEED);
 
     ui->Timeseries->addGraph();
-    ui->Timeseries->xAxis->setLabel("Time step");
+    ui->Timeseries->xAxis->setLabel(" ");
     ui->Timeseries->yAxis->setLabel("Breeding individuals");
 
     ui->Timeseries->xAxis->setRange(0,100);
     ui->Timeseries->yAxis->setRange(0, SIZE_COLONIE*SIZE_COLONIE * 3.14 );
-    
+
 }
 
 MainWindow::~MainWindow()
@@ -275,13 +275,24 @@ void MainWindow::on_STEP_clicked(){
     timestep++;
 
     ui->Timeseries->graph(0)->setData(time_data, breeding_data);
-    ui->Timeseries->xAxis->setRange(0, timestep);
+
+    QStringList monthNames = {"Jan","","","Apr","","","Jul","","","Okt","",""};
+    QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
+    for(int i = 0; i <= timestep; i++){
+        textTicker->addTick(i, monthNames[i % 12]);
+    }
+    ui->Timeseries->xAxis->setTicker(textTicker);
+
+    int visibleSteps = 60;
+    if(timestep > visibleSteps)
+        ui->Timeseries->xAxis->setRange(timestep - visibleSteps, timestep);
+    else
+        ui->Timeseries->xAxis->setRange(0, visibleSteps);
+
     ui->Timeseries->replot();
 
-    // Shows the plot
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
-
             ui->COLLONY->SetXY(y, x, BREEDING[y][x]);
         }
     }
