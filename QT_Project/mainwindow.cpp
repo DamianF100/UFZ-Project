@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include <random>
 #include <QTimer>
+#include <iostream>
 
 using namespace std;
 
@@ -167,6 +168,15 @@ void MainWindow::on_STEP_clicked(){
 
     if(sender() == &timer && !running) return;
 
+    if(MONTH < 12){
+        MONTH ++;
+    }
+    else{
+        MONTH = 1;
+    }
+
+    ui->MONTH->setText(MONTHS[MONTH-1]);
+
     // Count neighbours
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
@@ -249,3 +259,8 @@ void MainWindow::on_RUN_clicked()
 {
     running = !running;
 }
+
+void MainWindow::on_MONTH_textEdited(const QString &arg1)
+{
+}
+
