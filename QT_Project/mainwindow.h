@@ -49,6 +49,10 @@ private slots:
 
     void on_MONTH_textEdited(const QString &arg1);
 
+    void on_OPTION_SEAS_clicked();
+
+    void on_OPTION_NEIG_clicked();
+
 private:
     Ui::MainWindow *ui;
 
@@ -65,7 +69,7 @@ private:
     QVector<double> breeding_data;
     int timestep = 0;
 
-    int MONTH = 0;
+    int MONTH = 1;
     QString MONTHS[12] = {
         "January",
         "February",
