@@ -12,6 +12,7 @@ uniform_int_distribution<int> randist_1_27(1,27);
 
 
 int speed_timer = 30;
+int window = 100;
 
 //Effect options
 bool OPTION_NEIG = FALSE;
@@ -262,7 +263,7 @@ void MainWindow::on_STEP_clicked(){
     timestep++;
 
     ui->Timeseries->graph(0)->setData(time_data, breeding_data);
-    ui->Timeseries->xAxis->setRange(0, timestep);
+    ui->Timeseries->xAxis->setRange(timestep - 100, timestep);
     ui->Timeseries->replot();
 
     // Shows the plot
