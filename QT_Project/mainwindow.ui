@@ -36,6 +36,19 @@
       <height>600</height>
      </rect>
     </property>
+    <widget class="QLineEdit" name="MONTH">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>71</width>
+       <height>26</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Month</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QPushButton" name="STEP">
     <property name="geometry">

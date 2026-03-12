@@ -47,6 +47,8 @@ private slots:
     void on_PRINT_REST_cursorPositionChanged(int arg1, int arg2);
 
 
+    void on_MONTH_textEdited(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
 
@@ -62,6 +64,22 @@ private:
     QVector<double> time_data;
     QVector<double> breeding_data;
     int timestep = 0;
+
+    int MONTH = 0;
+    QString MONTHS[12] = {
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December"
+    };
 
 };
 #endif // MAINWINDOW_H
