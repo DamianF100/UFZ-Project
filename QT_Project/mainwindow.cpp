@@ -50,6 +50,28 @@ MainWindow::MainWindow(QWidget *parent)
     ui->COLLONY->LegendAdd(1, "Red");
     ui->COLLONY->LegendAdd(2, "Green");
 
+
+    // Strong Summer (Deep, saturated orange)
+    ui->COLLONY->LegendAdd(3,  RGB(255, 140, 0));   // January - Summer (Strong)
+    ui->COLLONY->LegendAdd(4,  RGB(255, 150, 30));  // February - Summer (Strong)
+
+    // Autumn (Strong, slightly shifting to a standard orange)
+    ui->COLLONY->LegendAdd(5,  RGB(255, 165, 0));   // March - Autumn start (Strong)
+    ui->COLLONY->LegendAdd(6,  RGB(255, 180, 60));  // April - Autumn (Medium-Strong)
+
+    // Transition / Winter (Fainting - adding more white/light)
+    ui->COLLONY->LegendAdd(7,  RGB(255, 200, 120)); // May - Late autumn (Fading)
+    ui->COLLONY->LegendAdd(8,  RGB(255, 220, 170)); // June - Winter (Faint)
+    ui->COLLONY->LegendAdd(9,  RGB(255, 235, 200)); // July - Deep winter (Faintest / Pale Peach)
+    ui->COLLONY->LegendAdd(10, RGB(255, 220, 170)); // August - Late winter (Faint)
+
+    // Spring (Strengthening back toward Summer)
+    ui->COLLONY->LegendAdd(11, RGB(255, 200, 100)); // September - Early spring (Gaining strength)
+    ui->COLLONY->LegendAdd(12, RGB(255, 180, 50));  // October - Spring (Medium-Strong)
+    ui->COLLONY->LegendAdd(13, RGB(255, 160, 20));  // November - Late spring (Strong)
+    ui->COLLONY->LegendAdd(14, RGB(255, 140, 0));   // December - Summer start (Strongest)
+
+
     running = false;
     connect(&timer, &QTimer::timeout, this, & MainWindow::on_STEP_clicked);
     timer.start(SPEED);
@@ -217,31 +239,31 @@ void MainWindow::on_STEP_clicked(){
     }
 
     // Update breeding status and index
-
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
-            if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
-                if(OPTION_NEIG){
-                    if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > REST && BREEDING_INDEX[y][x] < BREED_TRESH ){
-                            BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
-                    }
-                }
+            if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){ //Going over the array
 
-                if(OPTION_SEAS){
-                    if(MONTH == 12 || MONTH == 1 || MONTH == 2) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +2; // SUMMER - NORMAL UPDATE
-                    if(MONTH == 3 || MONTH == 4 || MONTH == 5) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -4; //AUTUMN - BREED_INDEX STAYS THE SAME, NO GOOD TIME FOR THE THING
-                    if(MONTH == 6 || MONTH == 7 || MONTH == 8) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -2; //WINTER - NORMAL BREEDING UPDATE, SPRING COMES, THEY STARTING TO THE MOOD
-                    if(MONTH == 9 || MONTH == 10 || MONTH == 11) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +4; //SPRING - FASTER UPDATE, THEY ARE IN THE MOOD
+                BREEDING_INDEX[y][x] ++;
+
+                if (BREEDING_INDEX[y][x] < BREED_TRESH){
+                    if(OPTION_NEIG){
+                        if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > REST ){
+                                BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
+                        }
+                    }
+
+                    if(OPTION_SEAS){
+                        if(MONTH == 12 || MONTH == 1 || MONTH == 2) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +1; // SUMMER - NORMAL UPDATE
+                        if(MONTH == 3 || MONTH == 4 || MONTH == 5) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -2; //AUTUMN - BREED_INDEX STAYS THE SAME, NO GOOD TIME FOR THE THING
+                        if(MONTH == 6 || MONTH == 7 || MONTH == 8) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -1; //WINTER - NORMAL BREEDING UPDATE, SPRING COMES, THEY STARTING TO THE MOOD
+                        if(MONTH == 9 || MONTH == 10 || MONTH == 11) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +2; //SPRING - FASTER UPDATE, THEY ARE IN THE MOOD
+                    }
                 }
 
                 //If the Index is higher than the Breed_threshold because of the effects from above please set it to 24 such that they are not faster in their breeding time
                 if( BREEDING_INDEX[y][x] > BREED_TRESH &&  BREEDING[y][x] ==1 ) {
                     BREEDING_INDEX[y][x] = BREED_TRESH - 1;
                 }
-
-
-
-                BREEDING_INDEX[y][x] ++;
 
 
 
@@ -254,7 +276,14 @@ void MainWindow::on_STEP_clicked(){
                 }
                 else{BREEDING[y][x] = 2;}
             }
+
+            if(OPTION_SEAS){ //Color Background
+                if( !((y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE) ){
+                    BREEDING[y][x] = MONTH +2;
+                }
+            }
         }
+
     }
 
     MONTH ++;
@@ -276,7 +305,7 @@ void MainWindow::on_STEP_clicked(){
     timestep++;
 
     ui->Timeseries->graph(0)->setData(time_data, breeding_data);
-    ui->Timeseries->xAxis->setRange(timestep - 100, timestep);
+    ui->Timeseries->xAxis->setRange(timestep - 60, timestep);
     ui->Timeseries->replot();
 
     // Shows the plot
