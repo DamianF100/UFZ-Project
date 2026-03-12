@@ -88,6 +88,9 @@
     <property name="minimum">
      <number>1</number>
     </property>
+    <property name="maximum">
+     <number>50</number>
+    </property>
     <property name="orientation">
      <enum>Qt::Orientation::Vertical</enum>
     </property>
@@ -104,6 +107,9 @@
     <property name="minimum">
      <number>1</number>
     </property>
+    <property name="maximum">
+     <number>20</number>
+    </property>
     <property name="orientation">
      <enum>Qt::Orientation::Vertical</enum>
     </property>
@@ -119,6 +125,9 @@
     </property>
     <property name="minimum">
      <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>24</number>
     </property>
     <property name="orientation">
      <enum>Qt::Orientation::Vertical</enum>
@@ -205,14 +214,14 @@
    <widget class="QLabel" name="label_4">
     <property name="geometry">
      <rect>
-      <x>290</x>
+      <x>280</x>
       <y>180</y>
-      <width>51</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>Speed</string>
+     <string>Pause time</string>
     </property>
    </widget>
    <widget class="QSlider" name="CURSOR_SPEED">
@@ -228,7 +237,7 @@
      <number>1</number>
     </property>
     <property name="maximum">
-     <number>1000</number>
+     <number>500</number>
     </property>
     <property name="orientation">
      <enum>Qt::Orientation::Vertical</enum>
@@ -271,6 +280,9 @@
     </property>
     <property name="minimum">
      <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>24</number>
     </property>
     <property name="orientation">
      <enum>Qt::Orientation::Vertical</enum>
