@@ -46,9 +46,9 @@ MainWindow::MainWindow(QWidget *parent)
     ui->COLLONY->SetXcells(WIDTH);
 
     //Plot colors
-    ui->COLLONY->LegendAdd(0, "White");
-    ui->COLLONY->LegendAdd(1, "Red");
-    ui->COLLONY->LegendAdd(2, "Green");
+    ui->COLLONY->LegendAdd(0, RGB(255, 140, 0));
+    ui->COLLONY->LegendAdd(1, RGB(51, 115, 184));
+    ui->COLLONY->LegendAdd(2, "White");
 
 
     // Strong Summer (Deep, saturated orange)
