@@ -305,7 +305,6 @@ void MainWindow::on_STEP_clicked(){
     timestep++;
 
     ui->Timeseries->graph(0)->setData(time_data, breeding_data);
-<<<<<<< HEAD
 
     QStringList monthNames = {"Jan","","","Apr","","","Jul","","","Okt","",""};
     QSharedPointer<QCPAxisTickerText> textTicker(new QCPAxisTickerText);
@@ -320,9 +319,6 @@ void MainWindow::on_STEP_clicked(){
     else
         ui->Timeseries->xAxis->setRange(0, visibleSteps);
 
-=======
-    ui->Timeseries->xAxis->setRange(timestep - 60, timestep);
->>>>>>> 4aab9fcf87aa521b113887f2715c8b12eaf876cc
     ui->Timeseries->replot();
 
     for(int y = 0; y < HEIGHT; y++){
