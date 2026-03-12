@@ -10,6 +10,15 @@ using namespace std;
 mt19937 rangen(42);
 uniform_int_distribution<int> randist_1_27(1,27);
 
+
+int speed_timer = 30;
+
+//Effect options
+bool OPTION_NEIG = FALSE;
+bool OPTION_SEAS = TRUE;
+
+int MONTH = 1; //indicates the current months
+
 // Definitions of the size
 
 const int HEIGHT       = 100; //Height of the the entire simulated area
@@ -181,20 +190,22 @@ void MainWindow::on_STEP_clicked(){
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
-                int COUNT_NEIG = 0; //counts the neighbour which are breeding
-                int y_start    = y - NEIG_DIST;
-                int x_start    = x - NEIG_DIST;
-                for(int y_n = y_start; y_n < y_start + NEIG_DIST * 2; y_n++){
-                    for(int x_n = x_start; x_n < x_start + NEIG_DIST * 2; x_n++){
-                        if(BREEDING[y_n][x_n] == 2){
-                            COUNT_NEIG ++;
+
+                if(OPTION_NEIG){
+                    int COUNT_NEIG = 0; //counts the neighbour which are breeding
+                    int y_start    = y - NEIG_DIST;
+                    int x_start    = x - NEIG_DIST;
+                    for(int y_n = y_start; y_n < y_start + NEIG_DIST * 2; y_n++){
+                        for(int x_n = x_start; x_n < x_start + NEIG_DIST * 2; x_n++){
+                            if(BREEDING[y_n][x_n] == 2){
+                                COUNT_NEIG ++;
+                            }
                         }
                     }
-                }
-
                 NEIGHBOURS[y][x] = COUNT_NEIG;
-
+                }
             }
+
         }
     }
 
@@ -202,18 +213,31 @@ void MainWindow::on_STEP_clicked(){
 
     for(int y = 0; y < HEIGHT; y++){
         for(int x = 0; x < WIDTH; x++){
-
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){
-                if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > REST && BREEDING_INDEX[y][x] < BREED_TRESH ){
-                        BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
-                    if( BREEDING_INDEX[y][x] > BREED_TRESH  ) {
-                            BREEDING_INDEX[y][x] = BREED_TRESH;
-
+                if(OPTION_NEIG){
+                    if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > REST && BREEDING_INDEX[y][x] < BREED_TRESH ){
+                            BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
                     }
                 }
-                else{
-                    BREEDING_INDEX[y][x] ++;
+
+                if(OPTION_SEAS){
+                    if(MONTH == 12 || MONTH == 1 || MONTH == 2) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]+1 ; // SUMMER - NORMAL UPDATE
+                    if(MONTH == 3 || MONTH == 4 || MONTH == 5) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -2; //AUTUMN - BREED_INDEX STAYS THE SAME, NO GOOD TIME FOR THE THING
+                    if(MONTH == 6 || MONTH == 7 || MONTH == 8) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]  -1; //WINTER - NORMAL BREEDING UPDATE, SPRING COMES, THEY STARTING TO THE MOOD
+                    if(MONTH == 9 || MONTH == 10 || MONTH == 11) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +2; //SPRING - FASTER UPDATE, THEY ARE IN THE MOOD
                 }
+
+                //If the Index is higher than the Breed_threshold because of the effects from above please set it to 24 such that they are not faster in their breeding time
+                if( BREEDING_INDEX[y][x] > BREED_TRESH &&  BREEDING[y][x] ==1 ) {
+                    BREEDING_INDEX[y][x] = BREED_TRESH - 1;
+                }
+
+
+
+                BREEDING_INDEX[y][x] ++;
+                MONTH ++;
+                if (MONTH == 13) MONTH =1;
+
 
                 // Updates the breeding grid
                 if(BREEDING_INDEX[y][x] > 27){
@@ -254,6 +278,7 @@ void MainWindow::on_STEP_clicked(){
     }
     ui->COLLONY->replot();
 }
+
 
 void MainWindow::on_RUN_clicked()
 {
