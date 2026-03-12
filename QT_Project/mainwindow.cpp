@@ -17,7 +17,6 @@ int speed_timer = 30;
 bool OPTION_NEIG = FALSE;
 bool OPTION_SEAS = FALSE;
 
-int MONTH = 1; //indicates the current months
 
 // Definitions of the size
 
@@ -190,12 +189,6 @@ void MainWindow::on_STEP_clicked(){
 
     if(sender() == &timer && !running) return;
 
-    if(MONTH < 12){
-        MONTH ++;
-    }
-    else{
-        MONTH = 1;
-    }
 
     ui->MONTH->setText(MONTHS[MONTH-1]);
 
@@ -234,10 +227,10 @@ void MainWindow::on_STEP_clicked(){
                 }
 
                 if(OPTION_SEAS){
-                    if(MONTH == 12 || MONTH == 1 || MONTH == 2) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]+1 ; // SUMMER - NORMAL UPDATE
-                    if(MONTH == 3 || MONTH == 4 || MONTH == 5) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -2; //AUTUMN - BREED_INDEX STAYS THE SAME, NO GOOD TIME FOR THE THING
-                    if(MONTH == 6 || MONTH == 7 || MONTH == 8) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]  -1; //WINTER - NORMAL BREEDING UPDATE, SPRING COMES, THEY STARTING TO THE MOOD
-                    if(MONTH == 9 || MONTH == 10 || MONTH == 11) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +2; //SPRING - FASTER UPDATE, THEY ARE IN THE MOOD
+                    if(MONTH == 12 || MONTH == 1 || MONTH == 2) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +2; // SUMMER - NORMAL UPDATE
+                    if(MONTH == 3 || MONTH == 4 || MONTH == 5) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -4; //AUTUMN - BREED_INDEX STAYS THE SAME, NO GOOD TIME FOR THE THING
+                    if(MONTH == 6 || MONTH == 7 || MONTH == 8) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -2; //WINTER - NORMAL BREEDING UPDATE, SPRING COMES, THEY STARTING TO THE MOOD
+                    if(MONTH == 9 || MONTH == 10 || MONTH == 11) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +4; //SPRING - FASTER UPDATE, THEY ARE IN THE MOOD
                 }
 
                 //If the Index is higher than the Breed_threshold because of the effects from above please set it to 24 such that they are not faster in their breeding time
@@ -248,8 +241,7 @@ void MainWindow::on_STEP_clicked(){
 
 
                 BREEDING_INDEX[y][x] ++;
-                MONTH ++;
-                if (MONTH == 13) MONTH =1;
+
 
 
                 // Updates the breeding grid
@@ -263,6 +255,10 @@ void MainWindow::on_STEP_clicked(){
             }
         }
     }
+
+    MONTH ++;
+    if (MONTH == 13) MONTH =1;
+
 
     int sum_breeding = 0;
 
