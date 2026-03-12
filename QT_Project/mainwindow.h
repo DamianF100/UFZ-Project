@@ -56,7 +56,7 @@ private:
     int NEIG_TRESH = 1;
     int NEIG_DIST  = 1;
     int NEIG_EFF   = 1;
-    int SPEED      = 200;
+    int SPEED      = 1;
     int REST       = 1;
 
     QVector<double> time_data;

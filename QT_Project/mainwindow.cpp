@@ -6,10 +6,10 @@
 using namespace std;
 
 //Radom generater
-mt19937 rangen(43289739);
+mt19937 rangen(42);
 uniform_int_distribution<int> randist_1_27(1,27);
 
-//Options for the visualisation
+
 int speed_timer = 30;
 
 //Effect options
@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     running = false;
     connect(&timer, &QTimer::timeout, this, & MainWindow::on_STEP_clicked);
-    timer.start(speed_timer);
+    timer.start(SPEED);
 
     ui->Timeseries->addGraph();
     ui->Timeseries->xAxis->setLabel("Time step");
@@ -94,19 +94,21 @@ void MainWindow::on_PRINT_REST_cursorPositionChanged(int arg1, int arg2)
     REST = ui->PRINT_REST->text().toInt();
 }
 
+
 void MainWindow::on_CURSOR_SPEED_sliderMoved(int position)
 {
     SPEED = position;
     ui->PRINT_SPEED->setText(QString::number(position));
-}
 
+    timer.stop();
+    timer.start(SPEED);
+}
 
 void MainWindow::on_CURSOR_REST_sliderMoved(int position)
 {
     REST = position;
     ui->PRINT_REST->setText(QString::number(position));
 }
-
 
 void MainWindow::on_CURSOR_TRESH_sliderMoved(int position)
 {
@@ -249,7 +251,6 @@ void MainWindow::on_STEP_clicked(){
         }
     }
 
-
     time_data.push_back(timestep);
     breeding_data.push_back(sum_breeding);
     timestep++;
@@ -257,7 +258,6 @@ void MainWindow::on_STEP_clicked(){
     ui->Timeseries->graph(0)->setData(time_data, breeding_data);
     ui->Timeseries->xAxis->setRange(0, timestep);
     ui->Timeseries->replot();
-
 
     // Shows the plot
     for(int y = 0; y < HEIGHT; y++){
