@@ -53,6 +53,8 @@ private slots:
 
     void on_OPTION_NEIG_clicked();
 
+    void on_MONTH_textChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
 

@@ -273,9 +273,9 @@ void MainWindow::on_INIT_clicked()
         }
     }
 
-    // for (int row = 0; row < 10*3; row++) {
-    //     cout << PARAMETERS[row][0] << endl;
-    // }
+    for (int row = 0; row < 10*3; row++) {
+        cout << PARAMETERS[row][0] << endl;
+    }
 }
 
 
