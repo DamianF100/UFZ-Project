@@ -23,6 +23,7 @@ bool OPTION_SEAS = FALSE;
 
 const int HEIGHT       = 100; //Height of the the entire simulated area
 const int WIDTH        = 100; //Width of the entire simulated ares
+// we have 2826 coupleees
 const int SIZE_COLONIE = 30;  //Radius of the simulted colonie - It is a square with this line size
 
 
@@ -243,9 +244,9 @@ void MainWindow::on_STEP_clicked(){
         for(int x = 0; x < WIDTH; x++){
             if( (y - HEIGHT/2)*(y - HEIGHT/2) + (x - WIDTH/2)*(x - WIDTH/2) <= SIZE_COLONIE*SIZE_COLONIE ){ //Going over the array
 
-                BREEDING_INDEX[y][x] ++;
+                BREEDING_INDEX[y][x] ++; //all get one more
 
-                if (BREEDING_INDEX[y][x] < BREED_TRESH){
+                if (BREEDING_INDEX[y][x] <= BREED_TRESH){
                     if(OPTION_NEIG){
                         if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > REST ){
                                 BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
@@ -253,16 +254,25 @@ void MainWindow::on_STEP_clicked(){
                     }
 
                     if(OPTION_SEAS){
-                        if(MONTH == 12 || MONTH == 1 || MONTH == 2) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +1; // SUMMER - NORMAL UPDATE
-                        if(MONTH == 3 || MONTH == 4 || MONTH == 5) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -2; //AUTUMN - BREED_INDEX STAYS THE SAME, NO GOOD TIME FOR THE THING
-                        if(MONTH == 6 || MONTH == 7 || MONTH == 8) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -1; //WINTER - NORMAL BREEDING UPDATE, SPRING COMES, THEY STARTING TO THE MOOD
-                        if(MONTH == 9 || MONTH == 10 || MONTH == 11) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +2; //SPRING - FASTER UPDATE, THEY ARE IN THE MOOD
+                        if(MONTH == 1)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x];      // JAN - normal
+                        if(MONTH == 2)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x];      // FEB - normal
+                        if(MONTH == 3)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]-1;  // MAR - worse time
+                        if(MONTH == 4)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]-1;  // APR - worse time
+                        if(MONTH == 5)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]-1;  // MAY - worse time
+                        if(MONTH == 6)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x];      // JUN - normal
+                        if(MONTH == 7)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x];      // JUL - normal
+                        if(MONTH == 8)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x];      // AUG - normal
+                        if(MONTH == 9)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]+1;  // SEP - good time
+                        if(MONTH == 10) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +1;  // OCT - good time
+                        if(MONTH == 11) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x]+1 ;  // NOV - good time
+                        if(MONTH == 12) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x];      // DEC - normal
+
                     }
                 }
 
                 //If the Index is higher than the Breed_threshold because of the effects from above please set it to 24 such that they are not faster in their breeding time
                 if( BREEDING_INDEX[y][x] > BREED_TRESH &&  BREEDING[y][x] ==1 ) {
-                    BREEDING_INDEX[y][x] = BREED_TRESH - 1;
+                    BREEDING_INDEX[y][x] = BREED_TRESH +1;
                 }
 
 
@@ -271,7 +281,7 @@ void MainWindow::on_STEP_clicked(){
                 if(BREEDING_INDEX[y][x] > 27){
                     BREEDING_INDEX[y][x] = 1;
                 }
-                if(BREEDING_INDEX[y][x] < BREED_TRESH){
+                if(BREEDING_INDEX[y][x]  <= BREED_TRESH){
                     BREEDING[y][x] = 1;
                 }
                 else{BREEDING[y][x] = 2;}
@@ -299,6 +309,9 @@ void MainWindow::on_STEP_clicked(){
             }
         }
     }
+
+    //Set out here
+    // outfile << timestep << "," << NEIG_TRESH << "," << NEIG_DIST  << "," << NEIG_EFF   << ","<< REST << "," << sum_breeding << std::endl;
 
     time_data.push_back(timestep);
     breeding_data.push_back(sum_breeding);
