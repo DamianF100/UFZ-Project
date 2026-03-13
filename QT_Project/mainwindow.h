@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
+#include <QVector>
+#include <fstream>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -20,37 +23,22 @@ public:
 private slots:
 
     void on_INIT_clicked();
-
     void on_STEP_clicked();
-
     void on_RUN_clicked();
 
     void on_CURSOR_TRESH_sliderMoved(int position);
-
     void on_CURSOR_DIST_sliderMoved(int position);
-
     void on_CURSOR_EFF_sliderMoved(int position);
-
     void on_CURSOR_SPEED_sliderMoved(int position);
-
     void on_CURSOR_REST_sliderMoved(int position);
 
-
     void on_PRINT_TRESH_cursorPositionChanged(int arg1, int arg2);
-
     void on_PRINT_DIST_cursorPositionChanged(int arg1, int arg2);
-
     void on_PRINT_EFF_cursorPositionChanged(int arg1, int arg2);
-
     void on_PRINT_SPEED_cursorPositionChanged(int arg1, int arg2);
-
     void on_PRINT_REST_cursorPositionChanged(int arg1, int arg2);
 
-
-    void on_MONTH_textEdited(const QString &arg1);
-
     void on_OPTION_SEAS_clicked();
-
     void on_OPTION_NEIG_clicked();
 
     void on_MONTH_textChanged(const QString &arg1);
@@ -73,19 +61,14 @@ private:
 
     int MONTH = 1;
     QString MONTHS[12] = {
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December"
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
     };
 
+    // Sensitivity analysis output file
+    std::ofstream outfile;
+
+    void runSensitivityAnalysis();
 };
+
 #endif // MAINWINDOW_H
