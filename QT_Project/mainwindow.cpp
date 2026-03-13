@@ -245,7 +245,7 @@ void MainWindow::on_STEP_clicked(){
 
                 BREEDING_INDEX[y][x] ++;
 
-                if (BREEDING_INDEX[y][x] < BREED_TRESH){
+                if (BREEDING_INDEX[y][x] <= BREED_TRESH){
                     if(OPTION_NEIG){
                         if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > REST ){
                                 BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
@@ -262,7 +262,7 @@ void MainWindow::on_STEP_clicked(){
 
                 //If the Index is higher than the Breed_threshold because of the effects from above please set it to 24 such that they are not faster in their breeding time
                 if( BREEDING_INDEX[y][x] > BREED_TRESH &&  BREEDING[y][x] ==1 ) {
-                    BREEDING_INDEX[y][x] = BREED_TRESH - 1;
+                    BREEDING_INDEX[y][x] = BREED_TRESH +1;
                 }
 
 
@@ -271,7 +271,7 @@ void MainWindow::on_STEP_clicked(){
                 if(BREEDING_INDEX[y][x] > 27){
                     BREEDING_INDEX[y][x] = 1;
                 }
-                if(BREEDING_INDEX[y][x] < BREED_TRESH){
+                if(BREEDING_INDEX[y][x] <= BREED_TRESH){
                     BREEDING[y][x] = 1;
                 }
                 else{BREEDING[y][x] = 2;}
