@@ -37,6 +37,9 @@ int    BREEDING[HEIGHT][WIDTH]; //Either 0 if an individuum is not breeding - 1 
 double BREEDING_INDEX[HEIGHT][WIDTH]; //Index how high an individuum is in the cycle - 1 t0 27
 int    NEIGHBOURS[HEIGHT][WIDTH];
 
+// Parameters for sensitivity analysis
+int PARAMETERS[10*3][6];
+
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -203,9 +206,78 @@ void MainWindow::on_INIT_clicked()
             ui->COLLONY->SetXY(y, x, BREEDING[y][x]);
         }
     }
+
     ui->COLLONY->replot();
 
+    int ROW_COUNT = 0;
+    for(int col = 0; col < 6; col++){
+        for (int row = 0; row < 10*3; row++) {
+
+            if(ROW_COUNT == 10){
+                ROW_COUNT = 0;
+            }
+
+            // Breeding threshold
+            if(col == 0){
+                if(ROW_COUNT == 0){
+                    PARAMETERS[row][col] = 1;
+                }
+                else{PARAMETERS[row][col] = 10*ROW_COUNT;
+                }
+            }
+
+            // Interaction
+            if(col == 1){
+                if(ROW_COUNT == 0){
+                    PARAMETERS[row][col] = 3;
+                }
+                else{PARAMETERS[row][col] = 3*ROW_COUNT;
+                }
+            }
+
+            // Effect
+            if(col == 2){
+                if(ROW_COUNT == 0){
+                    PARAMETERS[row][col] = 1;
+                }
+                else{PARAMETERS[row][col] = ROW_COUNT+1;
+                }
+            }
+            // Rest
+            if(col == 3){
+                if(ROW_COUNT == 0){
+                    PARAMETERS[row][col] = 2;
+                }
+                else{PARAMETERS[row][col] = 2*(ROW_COUNT+1);
+                }
+            }
+
+            // Season threshold
+            if(col == 4){
+                if(row < 10){
+                    PARAMETERS[row][col] = 0;
+                }
+                else{PARAMETERS[row][col] = 1;
+                }
+            }
+
+            // Neighbours threshold
+            if(col == 5){
+                if(row > 9){
+                    PARAMETERS[row][col] = 0;
+                }
+                else{PARAMETERS[row][col] = 1;
+                }
+            }
+            ROW_COUNT ++;
+        }
+    }
+
+    // for (int row = 0; row < 10*3; row++) {
+    //     cout << PARAMETERS[row][0] << endl;
+    // }
 }
+
 
 //One time step
 void MainWindow::on_STEP_clicked(){
@@ -245,7 +317,7 @@ void MainWindow::on_STEP_clicked(){
 
                 BREEDING_INDEX[y][x] ++;
 
-                if (BREEDING_INDEX[y][x] < BREED_TRESH){
+                if (BREEDING_INDEX[y][x] <= BREED_TRESH){
                     if(OPTION_NEIG){
                         if (NEIGHBOURS[y][x] > NEIG_TRESH && BREEDING_INDEX[y][x] > REST ){
                                 BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] + NEIG_EFF;
@@ -253,16 +325,17 @@ void MainWindow::on_STEP_clicked(){
                     }
 
                     if(OPTION_SEAS){
-                        if(MONTH == 12 || MONTH == 1 || MONTH == 2) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +1; // SUMMER - NORMAL UPDATE
-                        if(MONTH == 3 || MONTH == 4 || MONTH == 5) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -2; //AUTUMN - BREED_INDEX STAYS THE SAME, NO GOOD TIME FOR THE THING
-                        if(MONTH == 6 || MONTH == 7 || MONTH == 8) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -1; //WINTER - NORMAL BREEDING UPDATE, SPRING COMES, THEY STARTING TO THE MOOD
+                        if(MONTH == 12 || MONTH == 1 || MONTH == 2)  BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +2; // SUMMER - NORMAL UPDATE
+                        if(MONTH == 3 || MONTH == 4 || MONTH == 5)   BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -2; //AUTUMN - BREED_INDEX STAYS THE SAME, NO GOOD TIME FOR THE THING
+                        if(MONTH == 6 || MONTH == 7 || MONTH == 8)   BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] -1; //WINTER - NORMAL BREEDING UPDATE, SPRING COMES, THEY STARTING TO THE MOOD
                         if(MONTH == 9 || MONTH == 10 || MONTH == 11) BREEDING_INDEX[y][x] = BREEDING_INDEX[y][x] +2; //SPRING - FASTER UPDATE, THEY ARE IN THE MOOD
+
                     }
                 }
 
                 //If the Index is higher than the Breed_threshold because of the effects from above please set it to 24 such that they are not faster in their breeding time
                 if( BREEDING_INDEX[y][x] > BREED_TRESH &&  BREEDING[y][x] ==1 ) {
-                    BREEDING_INDEX[y][x] = BREED_TRESH - 1;
+                    BREEDING_INDEX[y][x] = BREED_TRESH + 1;
                 }
 
 
@@ -271,7 +344,7 @@ void MainWindow::on_STEP_clicked(){
                 if(BREEDING_INDEX[y][x] > 27){
                     BREEDING_INDEX[y][x] = 1;
                 }
-                if(BREEDING_INDEX[y][x] < BREED_TRESH){
+                if(BREEDING_INDEX[y][x] <= BREED_TRESH){
                     BREEDING[y][x] = 1;
                 }
                 else{BREEDING[y][x] = 2;}
