@@ -71,7 +71,8 @@ FF <- FF_RAW %>%
   mutate(OPTION = "Random")
   
 
-DATA <- rbind(TT, TF, FT, FF)
+DATA <- rbind(TT, TF, FT, FF) %>%
+  mutate(OPTION = factor(OPTION, levels = c("Random", "Neighbouring", "Season", "Season + Neighbouring")))
 
 DATA_T <- TT_RAW %>%
   mutate(timestep = timestep +1) %>%
@@ -98,21 +99,21 @@ SYNC_1 <- ggplot(DATA, aes(x= NEIG_DIST, y = NEIG_TRESH, fill = SYNC))+
   scale_x_continuous(name = "Interaction") +
   scale_y_continuous(name = "Treshold") +
   scale_fill_gradientn(colours = rev(c("#468892", "#74F3D3","#751C6D",  "#FF3BD5")),
-                       name = "Synchronisation") +
+                       name = "Sync.") +
   theme(
-    strip.text        = element_text(size = 6, color = "grey40", face = "bold"),
-    legend.text       = element_text(size = 6, color = "grey40"),
-    legend.title      = element_text(margin = margin(0,10,5,0), face = "bold", size = 8, color = "grey40"),
-    legend.key.height = unit(4, "mm"),
-    legend.key.width  = unit(4, "mm"),
+    strip.text        = element_text(size = 10, color = "grey40", face = "bold"),
+    legend.text       = element_text(size = 10, color = "grey40"),
+    legend.title      = element_text(margin = margin(0,0,10,0), face = "bold", size = 12, color = "grey40"),
+    legend.key.height = unit(6, "mm"),
+    legend.key.width  = unit(6, "mm"),
     legend.background = element_rect(fill = "white", color = NA),
     legend.key        = element_rect(fill = "white", color = NA),
     legend.margin     = margin(0,0,0,0),
     plot.margin       = margin(0, 0, 0, 0),
-    axis.text         = element_text(size = 6, color = "grey40"),
+    axis.text         = element_text(size = 10, color = "grey40"),
     axis.ticks        = element_line(color = "grey40"),
-    axis.title.x        = element_text(margin = margin(t = 5), face = "bold", size = 8, color = "grey40"),
-    axis.title.y        = element_text(margin = margin(r = 10), face = "bold", size = 8, color = "grey40"),
+    axis.title.x        = element_text(margin = margin(t = 5), face = "bold", size = 12, color = "grey40"),
+    axis.title.y        = element_text(margin = margin(r = 10), face = "bold", size = 12, color = "grey40"),
     panel.grid.major  = element_line(linewidth = .4),
     panel.grid.minor  = element_line(size = .2),
     aspect.ratio      = 1
@@ -120,24 +121,24 @@ SYNC_1 <- ggplot(DATA, aes(x= NEIG_DIST, y = NEIG_TRESH, fill = SYNC))+
 
 SYNC_2 <- ggplot(DATA_T, aes(x= NEIG_DIST, y = NEIG_TRESH, fill = YEAR))+
   scale_fill_gradientn(colours = rev(c("#468892", "#74F3D3","#751C6D",  "#FF3BD5")), name = "Year") +
-  scale_x_continuous(name = "Interaction") +
+  scale_x_continuous(name = "Interaction", breaks = seq(5,25,5)) +
   scale_y_continuous(name = "Treshold") +
   geom_raster() +
   guides(fill = guide_colorbar(reverse = TRUE)) +
   theme(
-    legend.text       = element_text(size = 6, color = "grey40"),
-    legend.title      = element_text(margin = margin(0,0,5,0), face = "bold", size = 8, color = "grey40"),
-    legend.key.height = unit(4, "mm"),
-    legend.key.width  = unit(4, "mm"),
+    legend.text       = element_text(size = 10, color = "grey40"),
+    legend.title      = element_text(margin = margin(0,0,10,0), face = "bold", size = 12, color = "grey40"),
+    legend.key.height = unit(6, "mm"),
+    legend.key.width  = unit(6, "mm"),
     legend.background = element_rect(fill = "white", color = NA),
     legend.key        = element_rect(fill = "white", color = NA),
     legend.margin     = margin(0,0,0,0),
     plot.margin       = margin(0, 0, 0, 0),
-    axis.text.y       = element_text(size = 6, color = "grey40"),
-    axis.text.x       = element_text(size = 6, color = "grey40"),
+    axis.text.y       = element_text(size = 10, color = "grey40"),
+    axis.text.x       = element_text(size = 10, color = "grey40"),
     axis.ticks        = element_line(color = "grey40"),
-    axis.title.x        = element_text(margin = margin(t = 5), face = "bold", size = 8, color = "grey40"),
-    axis.title.y        = element_text(margin = margin(r = 10), face = "bold", size = 8, color = "grey40"),
+    axis.title.x        = element_text(margin = margin(t = 5), face = "bold", size = 12, color = "grey40"),
+    axis.title.y        = element_text(margin = margin(r = 10), face = "bold", size = 12, color = "grey40"),
     panel.grid.major  = element_line(linewidth = .4),
     panel.grid.minor  = element_line(size = .2),
     aspect.ratio      = 1
